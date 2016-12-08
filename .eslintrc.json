@@ -1,10 +1,23 @@
 {
+  "env": {
+    "node": true,
+    "es6": true
+  },
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module"
   },
   "rules": {
-    "semi": "error",
-    "complexity": ["error", 5]
+    "eqeqeq": "error",
+    "complexity": [
+      "error",
+      5
+    ],
+    "no-extra-semi": "error",
+    "no-trailing-spaces": "error",
+    "prefer-const": [
+      "error"
+    ],
+    "semi": "error"
   }
 }
