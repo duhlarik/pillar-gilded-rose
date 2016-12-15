@@ -1,10 +1,4 @@
-function Item(name, sell_in, quality) {
-  this.name = name;
-  this.sell_in = sell_in;
-  this.quality = quality;
-}
-
-var items = []
+var items = [];
 
 function update_quality() {
   for (var i = 0; i < items.length; i++) {
@@ -54,6 +48,5 @@ function update_quality() {
   }
 }
 
-module.exports.Item = Item;
 module.exports.items = items;
 module.exports.update_quality = update_quality;
