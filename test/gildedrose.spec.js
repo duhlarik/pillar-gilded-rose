@@ -147,7 +147,7 @@ describe('Gilded Rose Inn', () => {
         expect(item.quality).to.equal(4);
       });
 
-      it('should increase by two when sell_in is less than or equal to 10 and greater than 5, with a starting quality of 49', () => {
+      it('should increase by one when sell_in is less than or equal to 10 and greater than 5, with a starting quality of 49', () => {
         const item = new Item('Backstage passes to a TAFKAL80ETC concert', 10, 49);
         items.push(item);
 
