@@ -15,7 +15,7 @@ function update_quality() {
           item.quality = updateItemQuality(item.quality, item.sell_in);
       }
         item.sell_in = reduceSellInByOne(item.sell_in);
-      }
+      } 
     });
 }
 
@@ -55,15 +55,14 @@ function updateBackstagePassQuality(backstagePassQuality, sell_in) {
 function updateAgedBrieQuality(agedBrieQuality, sell_in) {
   if (sell_in > 0) {
     agedBrieQuality += 1;
-  } else {
-    if (agedBrieQuality <= 48) {
+  } else if (sell_in <= 0) {
       agedBrieQuality += 2;
-    } else {
-      agedBrieQuality += 1;
     }
+  if (agedBrieQuality > 50) {
+    agedBrieQuality = 50;
   }
-  return agedBrieQuality;
-}
+    return agedBrieQuality;
+  }
 
 module.exports.items = items;
 module.exports.update_quality = update_quality;
