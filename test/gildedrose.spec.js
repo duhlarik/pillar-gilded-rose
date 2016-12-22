@@ -85,6 +85,15 @@ describe('Gilded Rose Inn', () => {
         expect(item.quality).to.equal(50);
       });
 
+      it('should not become greater than 50', () => {
+        const item = new Item('Aged Brie', -1, 49);
+        items.push(item);
+
+        updateQuality();
+
+        expect(item.quality).to.equal(50);
+      });
+
       describe('Expired (sell_in turns negative)', () => {
         it('should increase by two at end of day', () => {
           const item = new Item('Aged Brie', 0, 5);
