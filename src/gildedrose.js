@@ -17,39 +17,33 @@ function update_quality() {
 }
 
 function updateItemQuality(itemQuality, sell_in) {
-  if (sell_in > 0) {
-    console.log('this is sell in > 0');
+  if (sell_in <= 0) {
+    itemQuality -= 2;
+  } else {
     itemQuality -= 1;
-  } else
-    if (sell_in <= 0) {
-      console.log("this is sell in < 0");
-      itemQuality -= 2;
-    }
+  }
   return itemQuality;
 }
 
 function updateBackstagePassQuality(backstagePassQuality, sell_in) {
+  if (sell_in > 10) {
+    backstagePassQuality += 1;
+  }
   if (backstagePassQuality < 48) {
     if (sell_in <= 5) {
       backstagePassQuality += 3;
     }
-    if (sell_in <= 10 && sell_in > 5) {
-      backstagePassQuality = backstagePassQuality + 2;
-    }
-    if (sell_in > 10) {
-      backstagePassQuality = backstagePassQuality + 1;
+    if (sell_in > 5 && sell_in <= 10) {
+      backstagePassQuality += 2;
     }
   }
   if (backstagePassQuality === 48) {
     if (sell_in <= 10) {
-      backstagePassQuality = backstagePassQuality + 2;
-    }
-    if (sell_in > 10) {
-      backstagePassQuality = backstagePassQuality + 1;
+      backstagePassQuality += 2;
     }
   }
   if (backstagePassQuality === 49) {
-    backstagePassQuality = backstagePassQuality + 1;
+    backstagePassQuality += 1;
   }
   if (sell_in <= 0) {
     backstagePassQuality = 0;
