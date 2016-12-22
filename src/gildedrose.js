@@ -8,13 +8,13 @@ function update_quality() {
     if (item.quality < MAX_ITEM_QUALITY && item.quality > MIN_ITEM_QUALITY) {
       switch (item.name) {
         case 'Backstage passes to a TAFKAL80ETC concert':
-          updateBackstagePassQuality(item, item.sell_in);
+          updateBackstagePassQuality(item);
           break;
         case 'Aged Brie':
-          updateItemThatGetsBetterWithAge(item, item.sell_in, 1, 2);
+          updateItemThatGetsBetterWithAge(item, 1, 2);
           break; 
         default:
-          updateBasicItemQuality(item, item.sell_in, 1, 2);
+          updateBasicItemQuality(item, 1, 2);
       }
       reduceSellInByOne(item);
     }
@@ -29,8 +29,8 @@ function reduceSellInByOne(item) {
   return item.sell_in;
 }
 
-function updateBasicItemQuality(item, sell_in, rateBeforeSell_in, rateAfterSell_in) {
-  if (sell_in <= 0) {
+function updateBasicItemQuality(item, rateBeforeSell_in, rateAfterSell_in) {
+  if (item.sell_in <= 0) {
     item.quality -= rateAfterSell_in;
   } else {
     item.quality -= rateBeforeSell_in;
@@ -38,22 +38,22 @@ function updateBasicItemQuality(item, sell_in, rateBeforeSell_in, rateAfterSell_
   return item.quality;
 }
 
-function updateBackstagePassQuality(item, sell_in) {
+function updateBackstagePassQuality(item) {
   item.quality += 1;
-  if (sell_in <= 5) {
+  if (item.sell_in <= 5) {
     item.quality += 2;
   }
-  if (sell_in > 5 && sell_in <= 10) {
+  if (item.sell_in > 5 && item.sell_in <= 10) {
     item.quality += 1;
   }
-  if (sell_in <= 0) {
+  if (item.sell_in <= 0) {
     item.quality = 0;
   }
   return item.quality;
 }
 
-function updateItemThatGetsBetterWithAge(item, sell_in, rateBeforeSell_in, rateAfterSell_in) {
-  if (sell_in > 0) {
+function updateItemThatGetsBetterWithAge(item, rateBeforeSell_in, rateAfterSell_in) {
+  if (item.sell_in > 0) {
     item.quality += rateBeforeSell_in;
   } else {
     item.quality += rateAfterSell_in;
