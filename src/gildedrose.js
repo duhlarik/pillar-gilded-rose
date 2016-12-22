@@ -12,7 +12,7 @@ function update_quality() {
           break;
         case 'Aged Brie':
           item.quality = updateItemThatGetsBetterWithAge(item.quality, item.sell_in, 1, 2);
-          break; Ò
+          break; 
         default:
           item.quality = updateBasicItemQuality(item.quality, item.sell_in, 1, 2);
       }
