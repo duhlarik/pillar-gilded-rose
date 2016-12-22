@@ -16,6 +16,9 @@ function update_quality() {
       }
         item.sell_in = reduceSellInByOne(item.sell_in);
       } 
+      if (item.quality > 50) {
+        item.quality = 50;
+      }
     });
 }
 
@@ -46,21 +49,15 @@ function updateBackstagePassQuality(backstagePassQuality, sell_in) {
   if (sell_in <= 0) {
     backstagePassQuality = 0;
   }
-  if (backstagePassQuality > 50) {
-    backstagePassQuality = 50;
-  }
   return backstagePassQuality;
 }
 
 function updateAgedBrieQuality(agedBrieQuality, sell_in) {
   if (sell_in > 0) {
     agedBrieQuality += 1;
-  } else if (sell_in <= 0) {
+  } else {
       agedBrieQuality += 2;
     }
-  if (agedBrieQuality > 50) {
-    agedBrieQuality = 50;
-  }
     return agedBrieQuality;
   }
 
