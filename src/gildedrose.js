@@ -12,19 +12,19 @@ function update_quality() {
           break;
         case 'Aged Brie':
           item.quality = updateItemThatGetsBetterWithAge(item.quality, item.sell_in, 1, 2);
-          break;
+          break; Ò
         default:
           item.quality = updateBasicItemQuality(item.quality, item.sell_in, 1, 2);
       }
-        item.sell_in = reduceSellInByOne(item.sell_in);
-      } 
-      if (item.quality > MAX_ITEM_QUALITY) {
-        item.quality = MAX_ITEM_QUALITY;
-      }
-    });
+      item.sell_in = reduceSellInByOne(item.sell_in);
+    }
+    if (item.quality > MAX_ITEM_QUALITY) {
+      item.quality = MAX_ITEM_QUALITY;
+    }
+  });
 }
 
-function reduceSellInByOne (sell_in) {
+function reduceSellInByOne(sell_in) {
   sell_in -= 1;
   return sell_in;
 }
@@ -39,14 +39,12 @@ function updateBasicItemQuality(itemQuality, sell_in, rateBeforeSell_in, rateAft
 }
 
 function updateBackstagePassQuality(backstagePassQuality, sell_in) {
-  if (sell_in > 10) {
-    backstagePassQuality += 1;
-  }
+  backstagePassQuality += 1;
   if (sell_in <= 5) {
-    backstagePassQuality += 3;
+    backstagePassQuality += 2;
   }
   if (sell_in > 5 && sell_in <= 10) {
-    backstagePassQuality += 2;
+    backstagePassQuality += 1;
   }
   if (sell_in <= 0) {
     backstagePassQuality = 0;
@@ -58,10 +56,10 @@ function updateItemThatGetsBetterWithAge(itemQuality, sell_in, rateBeforeSell_in
   if (sell_in > 0) {
     itemQuality += rateBeforeSell_in;
   } else {
-      itemQuality += rateAfterSell_in;
-    }
-    return itemQuality;
+    itemQuality += rateAfterSell_in;
   }
+  return itemQuality;
+}
 
 module.exports.items = items;
 module.exports.update_quality = update_quality;
