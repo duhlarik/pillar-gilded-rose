@@ -1,9 +1,11 @@
 var items = [];
+const MAX_ITEM_QUALITY = 50;
+const MIN_ITEM_QUALITY = 0;
 
 function update_quality() {
   items.forEach((item) => {
     if (item.name === 'Sulfuras, Hand of Ragnaros') { return; }
-    if (item.quality < 50 && item.quality > 0) {
+    if (item.quality < MAX_ITEM_QUALITY && item.quality > MIN_ITEM_QUALITY) {
       switch (item.name) {
         case 'Backstage passes to a TAFKAL80ETC concert':
           item.quality = updateBackstagePassQuality(item.quality, item.sell_in);
@@ -16,8 +18,8 @@ function update_quality() {
       }
         item.sell_in = reduceSellInByOne(item.sell_in);
       } 
-      if (item.quality > 50) {
-        item.quality = 50;
+      if (item.quality > MAX_ITEM_QUALITY) {
+        item.quality = MAX_ITEM_QUALITY;
       }
     });
 }
