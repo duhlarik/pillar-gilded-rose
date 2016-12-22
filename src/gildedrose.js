@@ -8,15 +8,15 @@ function update_quality() {
     if (item.quality < MAX_ITEM_QUALITY && item.quality > MIN_ITEM_QUALITY) {
       switch (item.name) {
         case 'Backstage passes to a TAFKAL80ETC concert':
-          item.quality = updateBackstagePassQuality(item.quality, item.sell_in);
+          updateBackstagePassQuality(item, item.sell_in);
           break;
         case 'Aged Brie':
-          item.quality = updateItemThatGetsBetterWithAge(item.quality, item.sell_in, 1, 2);
+          updateItemThatGetsBetterWithAge(item, item.sell_in, 1, 2);
           break; 
         default:
-          item.quality = updateBasicItemQuality(item.quality, item.sell_in, 1, 2);
+          updateBasicItemQuality(item, item.sell_in, 1, 2);
       }
-      item.sell_in = reduceSellInByOne(item.sell_in);
+      reduceSellInByOne(item);
     }
     if (item.quality > MAX_ITEM_QUALITY) {
       item.quality = MAX_ITEM_QUALITY;
@@ -24,41 +24,41 @@ function update_quality() {
   });
 }
 
-function reduceSellInByOne(sell_in) {
-  sell_in -= 1;
-  return sell_in;
+function reduceSellInByOne(item) {
+  item.sell_in -= 1;
+  return item.sell_in;
 }
 
-function updateBasicItemQuality(itemQuality, sell_in, rateBeforeSell_in, rateAfterSell_in) {
+function updateBasicItemQuality(item, sell_in, rateBeforeSell_in, rateAfterSell_in) {
   if (sell_in <= 0) {
-    itemQuality -= rateAfterSell_in;
+    item.quality -= rateAfterSell_in;
   } else {
-    itemQuality -= rateBeforeSell_in;
+    item.quality -= rateBeforeSell_in;
   }
-  return itemQuality;
+  return item.quality;
 }
 
-function updateBackstagePassQuality(backstagePassQuality, sell_in) {
-  backstagePassQuality += 1;
+function updateBackstagePassQuality(item, sell_in) {
+  item.quality += 1;
   if (sell_in <= 5) {
-    backstagePassQuality += 2;
+    item.quality += 2;
   }
   if (sell_in > 5 && sell_in <= 10) {
-    backstagePassQuality += 1;
+    item.quality += 1;
   }
   if (sell_in <= 0) {
-    backstagePassQuality = 0;
+    item.quality = 0;
   }
-  return backstagePassQuality;
+  return item.quality;
 }
 
-function updateItemThatGetsBetterWithAge(itemQuality, sell_in, rateBeforeSell_in, rateAfterSell_in) {
+function updateItemThatGetsBetterWithAge(item, sell_in, rateBeforeSell_in, rateAfterSell_in) {
   if (sell_in > 0) {
-    itemQuality += rateBeforeSell_in;
+    item.quality += rateBeforeSell_in;
   } else {
-    itemQuality += rateAfterSell_in;
+    item.quality += rateAfterSell_in;
   }
-  return itemQuality;
+  return item.quality;
 }
 
 module.exports.items = items;
