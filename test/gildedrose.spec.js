@@ -85,7 +85,7 @@ describe('Gilded Rose Inn', () => {
         expect(item.quality).to.equal(50);
       });
 
-      it('should not become greater than 50', () => {
+      it('should decrease by only 1 if sell in is negative and quality is 49', () => {
         const item = new Item('Aged Brie', -1, 49);
         items.push(item);
 
