@@ -18,9 +18,6 @@ function update_quality() {
       }
       item.sell_in = reduceSellInByOne(item.sell_in);
     }
-    if (item.quality > MAX_ITEM_QUALITY) {
-      item.quality = MAX_ITEM_QUALITY;
-    }
   });
 }
 
@@ -37,9 +34,9 @@ function reduceSellInByOne(sell_in) {
 }
 
 function updateItemQuality(itemQuality, amount) {
-  if (itemQuality >= MAX_ITEM_QUALITY) { return MAX_ITEM_QUALITY; }
-  else if (itemQuality <= MIN_ITEM_QUALITY) { return MIN_ITEM_QUALITY; }
   itemQuality += amount;
+  if (itemQuality >= MAX_ITEM_QUALITY) { itemQuality = MAX_ITEM_QUALITY; }
+  else if (itemQuality <= MIN_ITEM_QUALITY) { itemQuality = MIN_ITEM_QUALITY; }
   return itemQuality;
 }
 
@@ -55,10 +52,10 @@ function updateBasicItemQuality(itemQuality, sell_in, rateBeforeSell_in, rateAft
 function updateBackstagePassQuality(backstagePassQuality, sell_in) {
   backstagePassQuality += 1;
   if (sell_in > 5 && sell_in <= 10) {
-    backstagePassQuality += 1;
+    backstagePassQuality = updateItemQuality(backstagePassQuality, 1);
   }
   if (sell_in <= 5) {
-    backstagePassQuality += 2;
+    backstagePassQuality = updateItemQuality(backstagePassQuality,2);
   }
   if (sell_in <= 0) {
     backstagePassQuality = 0;
@@ -68,9 +65,9 @@ function updateBackstagePassQuality(backstagePassQuality, sell_in) {
 
 function updateItemThatGetsBetterWithAge(itemQuality, sell_in, rateBeforeSell_in, rateAfterSell_in) {
   if (sell_in > 0) {
-    itemQuality += rateBeforeSell_in;
+    itemQuality = updateItemQuality (itemQuality, rateBeforeSell_in);
   } else {
-    itemQuality += rateAfterSell_in;
+    itemQuality = updateItemQuality (itemQuality, rateAfterSell_in);
   }
   return itemQuality;
 }
