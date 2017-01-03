@@ -7,7 +7,7 @@ function update_quality() {
     if (item.name === 'Sulfuras, Hand of Ragnaros') { return; }
     switch (item.name) {
       case 'Backstage passes to a TAFKAL80ETC concert':
-        item.quality = updateBackstagePassQuality(item.quality, item.sell_in);
+        item.quality = updateBackstagePassQuality(item.quality, item.sell_in, 0, 3, 2, 1);
         break;
       case 'Aged Brie':
         item.quality = updateItemThatGetsBetterWithAge(item.quality, item.sell_in, 1, 2);
@@ -44,17 +44,10 @@ function updateBasicItemQuality(itemQuality, sell_in, rateBeforeSell_in, rateAft
   return itemQuality;
 }
 
-function updateBackstagePassQuality(backstagePassQuality, sell_in) {
-  backstagePassQuality += 1;
-  if (sell_in > 5 && sell_in <= 10) {
-    backstagePassQuality = updateItemQuality(backstagePassQuality, 1);
-  }
-  if (sell_in <= 5) {
-    backstagePassQuality = updateItemQuality(backstagePassQuality, 2);
-  }
-  if (sell_in <= 0) {
-    backstagePassQuality = 0;
-  }
+function updateBackstagePassQuality(backstagePassQuality, sell_in, rateIfExpired, rateAt5orLessDays, rateAt10orLessDays, rateIfGreaterThan10Days) {
+  sell_in <= 0 ? backstagePassQuality = rateIfExpired : sell_in <= 5 ? backstagePassQuality = updateItemQuality(backstagePassQuality, rateAt5orLessDays) : sell_in <= 10 ?
+    backstagePassQuality = updateItemQuality(backstagePassQuality, rateAt10orLessDays) : backstagePassQuality = updateItemQuality(backstagePassQuality, rateIfGreaterThan10Days);
+
   return backstagePassQuality;
 }
 
