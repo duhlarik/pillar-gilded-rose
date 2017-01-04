@@ -40,26 +40,33 @@ function validateItemQuality(itemQuality) {
 
 function updateBasicItemQuality(itemQuality, sell_in, rateBeforeSell_in, rateAfterSell_in) {
 
-  sell_in <= 0 ? itemQuality = updateItemQuality(itemQuality, rateAfterSell_in) : itemQuality =
-    updateItemQuality(itemQuality, rateBeforeSell_in);
+  if (sell_in <= 0) {
+    itemQuality = updateItemQuality(itemQuality, rateAfterSell_in);
+  } else itemQuality = updateItemQuality(itemQuality, rateBeforeSell_in);
 
   return itemQuality;
 }
 
 function updateBackstagePassQuality(backstagePassQuality, sell_in, rateIfExpired, rateAt5orLessDays,
   rateAt10orLessDays, rateIfGreaterThan10Days) {
-  sell_in <= 0 ? backstagePassQuality = rateIfExpired : sell_in <= 5 ? backstagePassQuality =
-    updateItemQuality(backstagePassQuality, rateAt5orLessDays) : sell_in <= 10 ? backstagePassQuality =
-      updateItemQuality(backstagePassQuality, rateAt10orLessDays) : backstagePassQuality = updateItemQuality
-        (backstagePassQuality, rateIfGreaterThan10Days);
+  if (sell_in <= 0) {
+    backstagePassQuality = rateIfExpired;
+  } else
+    if (sell_in <= 5) {
+      backstagePassQuality = updateItemQuality(backstagePassQuality, rateAt5orLessDays);
+    } else
+      if (sell_in <= 10) {
+        backstagePassQuality = updateItemQuality(backstagePassQuality, rateAt10orLessDays);
+      } else backstagePassQuality = updateItemQuality(backstagePassQuality, rateIfGreaterThan10Days);
 
   return backstagePassQuality;
 }
 
 function updateItemThatGetsBetterWithAge(itemQuality, sell_in, rateBeforeSell_in, rateAfterSell_in) {
 
-  sell_in > 0 ? itemQuality = updateItemQuality(itemQuality, rateBeforeSell_in) : itemQuality =
-    updateItemQuality(itemQuality, rateAfterSell_in);
+  if (sell_in > 0) {
+    itemQuality = updateItemQuality(itemQuality, rateBeforeSell_in);
+  } else itemQuality = updateItemQuality(itemQuality, rateAfterSell_in);
 
   return itemQuality;
 }
