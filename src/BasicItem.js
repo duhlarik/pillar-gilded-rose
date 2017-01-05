@@ -2,37 +2,18 @@ const GenericItem = require('../src/GenericItem');
 
 class BasicItem extends GenericItem {
 
-  constructor(name, sell_in, itemQuality) {
-    super(name, sell_in, itemQuality);
-    this.rateBeforeSell_in = -1;
-    this.rateAfterSell_in = -2;
+  constructor(name, sellIn, quality) {
+    super(name, sellIn, quality);
+    this.rateBeforeSellIn = -1;
+    this.rateAfterSellIn = -2;
   }
 
-  get rateBeforeSell_in() {
-    return this.rateBeforeSell_in;
-  }
-
-  get rateAfterSell_in() {
-    return this.rateAfterSell_in;
-  }
-
-  set rateBeforeSell_in(value) {
-
-    this.rateBeforeSell_in = value;
-  }
-
-  set rateAfterSell_in(value) {
-
-    this.rateAfterSell_in = value;
-  }
-  updateItemQuality() {
-    if (sell_in <= 0) {
-      itemQuality = super.updateItemQuality(itemQuality, rateAfterSell_in);
+  updateBasicItemQuality() {
+    if (this.sellIn <= 0) {
+      this.updateItemQuality(this.rateAfterSellIn);
     } else {
-      itemQuality = super.updateItemQuality(itemQuality, rateBeforeSell_in);
+      this.updateItemQuality(this.rateBeforeSellIn);
     }
-
-    return itemQuality;
   }
 }
 

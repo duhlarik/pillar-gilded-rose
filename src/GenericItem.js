@@ -5,49 +5,27 @@ const MAX_ITEM_QUALITY = 50;
 const MIN_ITEM_QUALITY = 0;
 
 module.exports = class GenericItem extends Item {
-  // constructor(name, sell_in, itemQuality) {
-  //   super(name, sell_in, itemQuality);
-    // this.name = name;
-    // this.sell_in = sell_in;
-    // this.itemQuality = itemQuality;
+  constructor(name, sellIn, quality) {
+    super(name, sellIn, quality);
+    this.name = name;
+    this.sellIn = sellIn;
+    this.quality = quality;
 
-  // }
-
-  get itemQuality() {
-    return this.itemQuality;
   }
 
-  get sell_in() {
-    return this.sell_in;
+  reduceSellInByOne() {
+    this.sellIn -= 1;
   }
 
-  set itemQuality(value) {
+  updateItemQuality(amount) {
+    this.quality += amount;
 
-    this.itemQuality = value;
+    this.validateItemQuality();
   }
 
-  set sell_in(value) {
-
-    this.sell_in = value;
-  }
-
-  reduceSellInByOne(sell_in) {
-    sell_in -= 1;
-    return sell_in;
-  }
-
-  updateItemQuality(itemQuality, amount) {
-    itemQuality += amount;
-
-    return this.validateItemQuality(itemQuality);
-  }
-
-  validateItemQuality(itemQuality) {
-
-    itemQuality = Math.min(itemQuality, MAX_ITEM_QUALITY);
-    itemQuality = Math.max(itemQuality, MIN_ITEM_QUALITY);
-
-    return itemQuality;
+  validateItemQuality() {
+    this.quality = Math.min(this.quality, MAX_ITEM_QUALITY);
+    this.quality = Math.max(this.quality, MIN_ITEM_QUALITY);
   }
 };
 
