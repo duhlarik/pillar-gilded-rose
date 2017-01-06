@@ -5,6 +5,7 @@ const updateQuality = require('../src/gildedrose').update_quality;
 const GenericItem = require('../src/GenericItem');
 const BasicItem = require('../src/BasicItem');
 const AgedBrie = require('../src/AgedBrie');
+const ItemWithUnchangingQuality = require('../src/ItemWithUnchangingQuality');
 
 function removeAllItemsFromArray() {
   while (items.length > 0) {
@@ -79,8 +80,8 @@ describe('Gilded Rose Inn', () => {
           expect(item.quality).to.equal(3);
         });
       });
-
     });
+
     describe('Aged Brie', () => {
       it('should increase by one at end of day', () => {
         const item = new AgedBrie('AgedBrie', 5, 5);
@@ -126,6 +127,28 @@ describe('Gilded Rose Inn', () => {
           item.updateBasicItemQuality();
 
           expect(item.quality).to.equal(50);
+        });
+      });
+    });
+
+    describe('Sulfuras, Hand of Ragnaros', () => {
+      it('should not decrease at end of day', () => {
+        const item = new ItemWithUnchangingQuality('Sulfuras, Hand of Ragnaros', 10, 80);
+        items.push(item);
+          item.reduceSellInByOne();
+          item.returnQualityUnchanged();
+
+        expect(item.quality).to.equal(80);
+      });
+
+      describe('Expired (sell_in turns negative)', () => {
+        it('should not decrease at end of day', () => {
+          const item = new ItemWithUnchangingQuality('Sulfuras, Hand of Ragnaros', -1, 80);
+          items.push(item);
+          item.reduceSellInByOne();
+          item.returnQualityUnchanged();
+
+          expect(item.quality).to.equal(80);
         });
       });
     });
