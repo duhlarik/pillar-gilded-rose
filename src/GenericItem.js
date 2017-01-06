@@ -1,3 +1,6 @@
+
+"use strict";
+
 const Item = require('../src/item');
 
 var items = [];

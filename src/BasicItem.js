@@ -1,3 +1,4 @@
+"use strict";
 const GenericItem = require('../src/GenericItem');
 
 class BasicItem extends GenericItem {
