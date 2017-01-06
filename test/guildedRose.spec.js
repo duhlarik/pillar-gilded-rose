@@ -6,6 +6,7 @@ const BasicItem = require('../src/BasicItem');
 const AgedBrie = require('../src/AgedBrie');
 const ItemWithUnchangingQuality = require('../src/ItemWithUnchangingQuality');
 const BackstagePassItem = require('../src/BackstagePassItem');
+const ConjuredItem = require('../src/ConjuredItem');
 
 function removeAllItemsFromArray() {
   while (items.length > 0) {
@@ -217,6 +218,16 @@ describe('Gilded Rose Inn', () => {
         });
       });
     });
-  });
 
+    describe('Conjured Item', () => {
+      it('should decrease by two at the end of the day', () => {
+        const item = new ConjuredItem('Connjured Item', 5, 5);
+        items.push(item);
+        item.reduceSellInByOne();
+        item.updatesConjuredItemQuality();
+
+        expect(item.quality).to.equal(3);
+      });
+    });
+  });
 });
