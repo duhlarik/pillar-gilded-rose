@@ -6,6 +6,7 @@ const GenericItem = require('../src/GenericItem');
 const BasicItem = require('../src/BasicItem');
 const AgedBrie = require('../src/AgedBrie');
 const ItemWithUnchangingQuality = require('../src/ItemWithUnchangingQuality');
+const BackstagePassItem = require('../src/BackstagePassItem');
 
 function removeAllItemsFromArray() {
   while (items.length > 0) {
@@ -135,8 +136,8 @@ describe('Gilded Rose Inn', () => {
       it('should not decrease at end of day', () => {
         const item = new ItemWithUnchangingQuality('Sulfuras, Hand of Ragnaros', 10, 80);
         items.push(item);
-          item.reduceSellInByOne();
-          item.returnQualityUnchanged();
+        item.reduceSellInByOne();
+        item.returnQualityUnchanged();
 
         expect(item.quality).to.equal(80);
       });
@@ -149,6 +150,80 @@ describe('Gilded Rose Inn', () => {
           item.returnQualityUnchanged();
 
           expect(item.quality).to.equal(80);
+        });
+      });
+    });
+
+    describe('Backstage passes to a TAFKAL80ETC concert', () => {
+      it('should increase by one when sell_in is greater than 10', () => {
+        const item = new BackstagePassItem('Backstage passes to a TAFKAL80ETC concert', 11, 2);
+        items.push(item);
+        item.reduceSellInByOne();
+        item.updateBackstagePassQuality();
+      });
+
+      it('should increase by two when sell_in is less than or equal to 10', () => {
+        const item = new BackstagePassItem('Backstage passes to a TAFKAL80ETC concert', 10, 2);
+        items.push(item);
+        item.reduceSellInByOne();
+        item.updateBackstagePassQuality();
+
+        expect(item.quality).to.equal(4);
+      });
+
+      it('should increase by one when sell_in is less than or equal to 10 and greater than 5, with a starting quality of 49', () => {
+        const item = new BackstagePassItem('Backstage passes to a TAFKAL80ETC concert', 10, 49);
+        items.push(item);
+        item.reduceSellInByOne();
+        item.updateBackstagePassQuality();
+
+        expect(item.quality).to.equal(50);
+      });
+
+      it('should increase by two when sell_in is greater than 5', () => {
+        const item = new BackstagePassItem('Backstage passes to a TAFKAL80ETC concert', 6, 2);
+        items.push(item);
+        item.reduceSellInByOne();
+        item.updateBackstagePassQuality();
+
+        expect(item.quality).to.equal(4);
+      });
+
+      it('should increase by three when sell_in is less than or equal to 5', () => {
+        const item = new BackstagePassItem('Backstage passes to a TAFKAL80ETC concert', 5, 2);
+        items.push(item);
+        item.reduceSellInByOne();
+        item.updateBackstagePassQuality();
+
+        expect(item.quality).to.equal(5);
+      });
+
+      it('should increase by three when sell_in is less than or equal to 5, with a starting quality of 48', () => {
+        const item = new BackstagePassItem('Backstage passes to a TAFKAL80ETC concert', 5, 48);
+        items.push(item);
+        item.reduceSellInByOne();
+        item.updateBackstagePassQuality();
+
+        expect(item.quality).to.equal(50);
+      });
+
+      it('should not become greater than 50', () => {
+        const item = new BackstagePassItem('Backstage passes to a TAFKAL80ETC concert', 1, 50);
+        items.push(item);
+        item.reduceSellInByOne();
+        item.updateBackstagePassQuality();
+
+        expect(item.quality).to.equal(50);
+      });
+
+      describe('Expired (sell_in turns negative)', () => {
+        it('should equal zero', () => {
+          const item = new BackstagePassItem('Backstage passes to a TAFKAL80ETC concert', 0, 2);
+          items.push(item);
+          item.reduceSellInByOne();
+          item.updateBackstagePassQuality();
+
+          expect(item.quality).to.equal(0);
         });
       });
     });
