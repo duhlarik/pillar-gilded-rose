@@ -228,6 +228,51 @@ describe('Gilded Rose Inn', () => {
 
         expect(item.quality).to.equal(3);
       });
+
+      it('should decrease by two for multiple items at the end of the day', () => {
+        const item1 = new ConjuredItem('Basic Item 1', 5, 5);
+        const item2 = new ConjuredItem('Basic Item 2', 7, 7);
+        items.push(item1);
+        items.push(item2);
+
+        item1.reduceSellInByOne();
+        item2.reduceSellInByOne();
+        item1.updatesConjuredItemQuality();
+        item2.updatesConjuredItemQuality();
+
+        expect(item1.quality).to.equal(3);
+        expect(item2.quality).to.equal(5);
+      });
+
+      it('should never become negative', () => {
+        const item = new ConjuredItem('Basic Item', 1, -1);
+        items.push(item);
+        item.reduceSellInByOne();
+        item.updatesConjuredItemQuality();
+
+        expect(item.quality).to.equal(0);
+      });
+
+      describe('Expired (sell_in turns negative)', () => {
+        it('should never become negative', () => {
+          const item = new ConjuredItem('Basic Item', -1, -1);
+          items.push(item);
+          item.reduceSellInByOne();
+          item.updatesConjuredItemQuality();
+
+          expect(item.quality).to.equal(0);
+        });
+
+        it('should decrease by four', () => {
+          const item = new ConjuredItem('Basic Item', 0, 5);
+          items.push(item);
+          item.reduceSellInByOne();
+          item.updatesConjuredItemQuality();
+
+          expect(item.quality).to.equal(1);
+        });
+      });
+
     });
   });
 });
