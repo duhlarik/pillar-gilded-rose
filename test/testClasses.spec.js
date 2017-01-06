@@ -21,7 +21,9 @@ describe('Gilded Rose Inn', () => {
         const item = new BasicItem('Basic Item', 5, 5);
         items.push(item);
 
-        basicItem.updateItemQuality();
+        item.reduceSellInByOne();
+
+        item.updateBasicItemQuality();
 
         expect(item.quality).to.equal(4);
       });
@@ -32,27 +34,35 @@ describe('Gilded Rose Inn', () => {
         items.push(item1);
         items.push(item2);
 
-        basicItem.updateItemQuality();
+        item1.reduceSellInByOne();
+        item2.reduceSellInByOne();
+
+        item1.updateBasicItemQuality();
+        item2.updateBasicItemQuality();
 
         expect(item1.quality).to.equal(4);
         expect(item2.quality).to.equal(6);
       });
 
       it('should never become negative', () => {
-        const item = new BasicItem('Basic Item', 1, 0);
+        const item = new BasicItem('Basic Item', 1, -1);
         items.push(item);
 
-        basicItem.updateItemQuality();
+        item.reduceSellInByOne();
+
+        item.updateBasicItemQuality();
 
         expect(item.quality).to.equal(0);
       });
 
       describe('Expired (sell_in turns negative)', () => {
         it('should never become negative', () => {
-          const item = new BasicItem('Basic Item', -1, 0);
+          const item = new BasicItem('Basic Item', -1, -1);
           items.push(item);
 
-          basicItem.updateItemQuality();
+          item.reduceSellInByOne();
+
+          item.updateBasicItemQuality();
 
           expect(item.quality).to.equal(0);
         });
@@ -61,7 +71,9 @@ describe('Gilded Rose Inn', () => {
           const item = new BasicItem('Basic Item', 0, 5);
           items.push(item);
 
-          basicItem.updateItemQuality();
+          item.reduceSellInByOne();
+
+          item.updateBasicItemQuality();
 
           expect(item.quality).to.equal(3);
         });
