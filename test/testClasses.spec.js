@@ -4,6 +4,7 @@ const items = require('../src/gildedrose').items;
 const updateQuality = require('../src/gildedrose').update_quality;
 const GenericItem = require('../src/GenericItem');
 const BasicItem = require('../src/BasicItem');
+const AgedBrie = require('../src/AgedBrie');
 
 function removeAllItemsFromArray() {
   while (items.length > 0) {
@@ -78,6 +79,56 @@ describe('Gilded Rose Inn', () => {
           expect(item.quality).to.equal(3);
         });
       });
+
+    });
+    describe('Aged Brie', () => {
+      it('should increase by one at end of day', () => {
+        const item = new AgedBrie('AgedBrie', 5, 5);
+        items.push(item);
+        item.reduceSellInByOne();
+        item.updateBasicItemQuality();
+
+        expect(item.quality).to.equal(6);
+      });
+
+      it('should not become greater than 50', () => {
+        const item = new AgedBrie('Aged Brie', 1, 50);
+        items.push(item);
+        item.reduceSellInByOne();
+        item.updateBasicItemQuality();
+
+        expect(item.quality).to.equal(50);
+      });
+
+      it('should decrease by only 1 if sell in is negative and quality is 49', () => {
+        const item = new AgedBrie('Aged Brie', -1, 49);
+        items.push(item);
+        item.reduceSellInByOne();
+        item.updateBasicItemQuality();
+
+        expect(item.quality).to.equal(50);
+      });
+
+      describe('Expired (sell_in turns negative)', () => {
+        it('should increase by two at end of day', () => {
+          const item = new AgedBrie('Aged Brie', 0, 5);
+          items.push(item);
+          item.reduceSellInByOne();
+          item.updateBasicItemQuality();
+
+          expect(item.quality).to.equal(7);
+        });
+
+        it('should not become greater than 50', () => {
+          const item = new AgedBrie('Aged Brie', -1, 50);
+          items.push(item);
+          item.reduceSellInByOne();
+          item.updateBasicItemQuality();
+
+          expect(item.quality).to.equal(50);
+        });
+      });
     });
   });
+
 });

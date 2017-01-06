@@ -1,13 +1,14 @@
+
 "use strict";
 
 const GenericItem = require('../src/GenericItem');
 
-class BasicItem extends GenericItem {
+class AgedBrie extends GenericItem {
 
   constructor(name, sellIn, quality) {
     super(name, sellIn, quality);
-    this.rateBeforeSellIn = -1;
-    this.rateAfterSellIn = -2;
+    this.rateBeforeSellIn = 1;
+    this.rateAfterSellIn = 2;
   }
 
   updateBasicItemQuality() {
@@ -19,4 +20,4 @@ class BasicItem extends GenericItem {
   }
 }
 
-module.exports = BasicItem;
+module.exports = AgedBrie;
