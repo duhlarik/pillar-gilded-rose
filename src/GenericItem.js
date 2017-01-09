@@ -13,6 +13,8 @@ module.exports = class GenericItem extends Item {
     this.name = name;
     this.sellIn = sellIn;
     this.quality = quality;
+    this.rateBeforeSellIn = -1;
+    this.rateAfterSellIn = -2;
 
   }
 
@@ -20,9 +22,13 @@ module.exports = class GenericItem extends Item {
     this.sellIn -= 1;
   }
 
-  updateItemQuality(amount) {
-    this.quality += amount;
-
+  update() {
+    this.reduceSellInByOne();
+    if (this.sellIn <= 0) {
+      this.quality += this.rateAfterSellIn;
+    } else {
+      this.quality += this.rateBeforeSellIn;
+    }
     this.validateItemQuality();
   }
 

@@ -8,9 +8,8 @@ class ItemWithUnchangingQuality extends GenericItem {
     super(name, sellIn, quality);
   }
 
-  returnQualityUnchanged() {
-      this.quality += 0;
-    }
-  }
+  update() {}
+  
+}
 
 module.exports = ItemWithUnchangingQuality;

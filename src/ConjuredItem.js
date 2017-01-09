@@ -9,14 +9,6 @@ class ConjuredItem extends GenericItem {
     this.rateBeforeSellIn = -2;
     this.rateAfterSellIn = -4;
   }
-
-  updatesConjuredItemQuality() {
-    if (this.sellIn <= 0) {
-      this.updateItemQuality(this.rateAfterSellIn);
-    } else {
-      this.updateItemQuality(this.rateBeforeSellIn);
-    }
-  }
 }
 
 module.exports = ConjuredItem;
